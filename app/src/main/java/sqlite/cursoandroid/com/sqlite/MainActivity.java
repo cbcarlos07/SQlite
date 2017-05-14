@@ -20,18 +20,23 @@ public class MainActivity extends Activity {
         SQLiteDatabase bancoDados = openOrCreateDatabase("app", MODE_PRIVATE, null);
 
         //tabela
-        bancoDados.execSQL("CREATE TABLE IF NOT EXISTS pessoas (nome VARCHAR, idade INT( 3 )) ");
+
+        bancoDados.execSQL("CREATE TABLE IF NOT EXISTS pessoas (id INTEGER PRIMARY KEY AUTOINCREMENT, nome VARCHAR, idade INT( 3 )) ");
+         //bancoDados.execSQL("DROP TABLE pessoas");
 
         //Inserir dados
-        bancoDados.execSQL("INSERT INTO pessoas (nome, idade) VALUES ('Marcos',30) ");
-        bancoDados.execSQL("INSERT INTO pessoas (nome, idade) VALUES ('Ana',20) ");
+        bancoDados.execSQL("INSERT INTO pessoas (nome, idade) VALUES ('Mariana',18) ");
+       // bancoDados.execSQL("INSERT INTO pessoas (nome, idade) VALUES ('Tiago',50) ");
+       // bancoDados.execSQL("UPDATE pessoas SET idade = 28 WHERE nome = 'Marcos' ");
+       //  bancoDados.execSQL("DELETE FROM pessoas WHERE nome = 'Marcos' ");
 
         //recuperar dados
-        Cursor cursor = bancoDados.rawQuery("SELECT nome, idade FROM pessoas ", null);
+        Cursor cursor = bancoDados.rawQuery("SELECT * FROM pessoas ", null);
 
         //recupera o indice das colunas
         int indiceColunaNome = cursor.getColumnIndex("nome");
         int indiceColunaIdade = cursor.getColumnIndex("idade");
+        int indiceColunaId = cursor.getColumnIndex("id");
 
         cursor.moveToFirst();
 
@@ -39,6 +44,7 @@ public class MainActivity extends Activity {
 
             Log.i("RESULTADO - nome: ", cursor.getString( indiceColunaNome ));
             Log.i("RESULTADO - idade: ", cursor.getString( indiceColunaIdade ));
+            Log.i("RESULTADO - id: ", cursor.getString( indiceColunaId ));
 
            cursor.moveToNext();
         }
